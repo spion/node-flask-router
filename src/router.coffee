@@ -98,7 +98,7 @@ class Router
              (!err && current.length > 3)
                return n(err)
           else
-            current(req, res, n)
+            current(req, res, n, err)
         handle(0, err)
       else
         checkRule(idx + 1, err)
