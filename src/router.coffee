@@ -92,7 +92,7 @@ class Router
             if (i == handlerChain.length - 1) or
                (arg == 'route')
                  return checkRule(idx + 1)
-            handle(i + 1, err)
+            handle(i + 1, arg)
           current = handlerChain[i]
           if (err && current.length < 4) or
              (!err && current.length > 3)
