@@ -72,8 +72,8 @@ class Router
     ruleArray = @rules[req.method]
     matchedRules = {}
 
-    checkRule = (idx) ->
-      if idx == ruleArray.length then return fail();
+    checkRule = (idx, err) ->
+      if idx == ruleArray.length then return fail()
       rule = ruleArray[idx]
       if extracted = rule.extractor.extract(p)
         matchedRules[rule.id] = 1
@@ -87,16 +87,21 @@ class Router
         handlerChain = rule.handlers
         handle = (i) ->
           n = (arg) ->
-            if status.done then return
-            if arg == 'route'
-              return checkRule(idx + 1)
-            if i == handlerChain.length - 1 then res.end()
-            else handle(i + 1)
+            if status.done
+              return
+            if (i == handlerChain.length - 1) or
+               (arg == 'route')
+                 return checkRule(idx + 1)
+            handle(i + 1, err)
           current = handlerChain[i]
-          current(req, res, n)
-        handle(0)
+          if (err && current.length < 4) or
+             (!err && current.length > 3)
+               return n(err)
+          else
+            current(req, res, n)
+        handle(0, err)
       else
-        checkRule(idx + 1)
+        checkRule(idx + 1, err)
     fail = =>
       # If no rules were matched, see if appending a slash will result
       # in a match. If so, send a redirect to the correct URL.
