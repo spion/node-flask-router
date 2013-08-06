@@ -73,7 +73,8 @@ class Router
     matchedRules = {}
 
     checkRule = (idx, err) ->
-      if idx == ruleArray.length then return fail()
+      if idx == ruleArray.length
+        return fail(err)
       rule = ruleArray[idx]
       if extracted = rule.extractor.extract(p)
         matchedRules[rule.id] = 1
@@ -103,7 +104,7 @@ class Router
         handle(0, err)
       else
         checkRule(idx + 1, err)
-    fail = =>
+    fail = (err) =>
       # If no rules were matched, see if appending a slash will result
       # in a match. If so, send a redirect to the correct URL.
       bp = p + '/'
@@ -131,7 +132,7 @@ class Router
         res.writeHead(405, 'Allow': allowed.join(', '))
         res.end()
         return
-      next()
+      next(err)
 
     checkRule(0)
 
