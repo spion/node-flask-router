@@ -89,9 +89,10 @@ class Router
           n = (arg) ->
             if status.done
               return
-            if (i == handlerChain.length - 1) or
-               (arg == 'route')
-                 return checkRule(idx + 1)
+            if (arg == 'route')
+              return checkRule(idx + 1)
+            if (i == handlerChain.length - 1)
+              return checkRule(idx + 1, arg)
             handle(i + 1, arg)
           current = handlerChain[i]
           if (err && current.length < 4) or
