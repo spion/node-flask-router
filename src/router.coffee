@@ -85,7 +85,7 @@ class Router
           status.done = true
           end.apply(res, args)
         handlerChain = rule.handlers
-        handle = (i) ->
+        handle = (i, err) ->
           n = (arg) ->
             if status.done
               return
