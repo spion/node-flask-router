@@ -16,6 +16,7 @@ exports.arguments = (code, headers, data) ->
     ans = {message: data.message}
     if (process.env['NODE_ENV'] == 'development')
       ans.stack = data.stack
+      ans.stackPlus = new Error().stack
     data = JSON.stringify(ans)
   else if (data? && !(data instanceof Buffer))
     ctype = 'application/json'
