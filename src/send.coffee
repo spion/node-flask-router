@@ -14,7 +14,8 @@ exports.arguments = (code, headers, data) ->
     code = data.code || 500
     ctype = 'application/json'
     ans = {message: data.message}
-    if (process.env['NODE_ENV'] == 'development')
+    nenv = process.env['NODE_ENV']
+    if (nenv == 'development' or nenv == 'test')
       ans.stack = data.stack
       ans.stackPlus = new Error().stack
     data = JSON.stringify(ans)
