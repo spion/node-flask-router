@@ -211,7 +211,7 @@ module.exports = (parsers) ->
     get: (pattern, handlers...) ->
       r.register('get', 'GET', pattern, handlers...)
     options: (pattern, handlers...) ->
-      r.register('options', 'options', pattern, handlers...)
+      r.register('options', 'OPTIONS', pattern, handlers...)
     post: (pattern, handlers...) ->
       r.register('post', 'POST', pattern, handlers...)
     put: (pattern, handlers...) ->
