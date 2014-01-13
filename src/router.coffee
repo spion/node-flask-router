@@ -38,6 +38,7 @@ class Router
       PUT: []
       DELETE: []
       PATCH: []
+      OPTIONS: []
     @compiled = false
 
 
@@ -209,6 +210,8 @@ module.exports = (parsers) ->
     registerParser: (name, parser) -> compiler.parsers[name] = parser
     get: (pattern, handlers...) ->
       r.register('get', 'GET', pattern, handlers...)
+    options: (pattern, handlers...) ->
+      r.register('options', 'options', pattern, handlers...)
     post: (pattern, handlers...) ->
       r.register('post', 'POST', pattern, handlers...)
     put: (pattern, handlers...) ->
@@ -218,7 +221,7 @@ module.exports = (parsers) ->
     patch: (pattern, handlers...) ->
       r.register('patch', 'PATCH', pattern, handlers...)
     all: (pattern, handlers...) ->
-      for method in ['GET', 'POST', 'PUT', 'DELETE', 'PATCH']
+      for method in ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS']
         r.register('all', method, pattern, handlers...)
       return handlers
     use: (usepath, handlers...) ->
