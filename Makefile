@@ -15,4 +15,4 @@ link: test compile
 pack: test compile
 	npm pack
 
-.PHONY: test
+.PHONY: test compile
